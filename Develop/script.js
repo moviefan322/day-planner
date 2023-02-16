@@ -1,16 +1,28 @@
-var nineAM = document.getElementById("hour-09");
-var hoursEl = document.getElementsByClassName("time-block");
+var nineAM = $("#hour-09");
+var hoursEl = $(".time-block");
+var currentDayEl = $("#currentDay");
 
 $(document).ready(function () {
-  let elId = nineAM.getAttribute("id");
-  isoId = elId.substr(5, 6);
-  intId = parseInt(isoId);
+  console.log(currentDayEl);
+  currentDayEl.text(
+    "Today is " + dayjs().format("dddd") + " " + dayjs().format("MMMM D")
+  );
+
+  let currentHourStr = dayjs().format("HH");
+  let currentHour = parseInt(currentHourStr);
+  console.log(currentHour);
 
   function returnInt(item) {
-    var id = item.getAttribute("id");
+    var id = item.attr("id");
     var numId = id.substr(5, 6);
     var intId = parseInt(numId);
-    return intId;
+    if (intId === currentHour) {
+      $(item).attr("class", "row time-block present");
+    } else if (intId < currentHour) {
+      $(item).attr("class", "row time-block past");
+    } else {
+      $(item).attr("class", "row time-block future");
+    }
   }
 
   returnInt(nineAM);
@@ -52,8 +64,7 @@ $(document).ready(function () {
 //
 // TODO: Add code to display the current date in the header of the page.
 
-
-<script src="path/to/dayjs/dayjs.min.js"></script>
-<script>
-  dayjs().format()
-</script>
+// <script src="path/to/dayjs/dayjs.min.js"></script>
+// <script>
+//   dayjs().format()
+// </script>
